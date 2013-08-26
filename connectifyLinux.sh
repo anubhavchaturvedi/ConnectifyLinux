@@ -1,18 +1,32 @@
 #!/bin/bash
 
-from_if=$1
-to_if=$2
-if [ "$from_if" == "" ]
+FROM_IF=$1
+TO_IF=$2
+
+if [ "$FROM_IF" == "" ]
 then
-        from_if="wlan0"
+        FROM_IF="eth0"
 fi
-if [ "$to_if" == "" ]
+if [ "$TO_IF" == "" ]
 then
-        to_if="eth0"
+        TO_IF="wlan0"
 fi
 
+if [ $(whoami) != "root" ];
+then
+	echo "You need to be a root user in order to execute this command.";
+	echo "Command Usage : sudo connectify <from interface> <to interface>";
+	exit 1;
+elif [$FROM_IF == $TO_IF ];
+then
+	echo "Both the interfaces selected are same."
+	echo "Command Usage : sudo connectify <from interface> <to interface>"
+	exit 1;
+fi
+
+
 #Initial wifi interface configuration
-ifconfig $from_if up 192.168.1.1 netmask 255.255.255.0
+ifconfig $TO_IF up 192.168.1.1 netmask 255.255.255.0
 sleep 2
  
 ###########Start dnsmasq, modify if required##########
@@ -27,8 +41,8 @@ iptables --flush
 iptables --table nat --flush
 iptables --delete-chain
 iptables --table nat --delete-chain
-iptables --table nat --append POSTROUTING --out-interface $to_if -j MASQUERADE
-iptables --append FORWARD --in-interface $from_if -j ACCEPT
+iptables --table nat --append POSTROUTING --out-interface $FROM_IF -j MASQUERADE
+iptables --append FORWARD --in-interface $TO_IF -j ACCEPT
  
 #Thanks to lorenzo
 #Uncomment the line below if facing problems while sharing PPPoE, see lorenzo's comment for more details
