@@ -17,7 +17,7 @@ then
 	echo "You need to be a root user in order to execute this command.";
 	echo "Command Usage : sudo connectify <from interface> <to interface>";
 	exit 1;
-elif [$FROM_IF == $TO_IF ];
+elif [ $FROM_IF == $TO_IF ];
 then
 	echo "Both the interfaces selected are same."
 	echo "Command Usage : sudo connectify <from interface> <to interface>"
