@@ -25,6 +25,11 @@ then
 fi
 
 
+echo "Starting the WiFi ..... ";
+rfkill unblock wlan;
+sleep 5;
+
+
 #Initial wifi interface configuration
 ifconfig $TO_IF up 192.168.1.1 netmask 255.255.255.0
 sleep 2
@@ -52,6 +57,7 @@ sysctl -w net.ipv4.ip_forward=1
  
 #start hostapd
 echo "STARTING HOSTAPD"
-hostapd /home/anubhav/hostapd-test.conf
+hostapd /etc/hostapd/hostapd.conf
 killall dnsmasq
 echo "killall dnsmasq executed"
+rfkill block wlan;
