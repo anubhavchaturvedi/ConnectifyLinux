@@ -49,8 +49,7 @@ iptables --table nat --delete-chain
 iptables --table nat --append POSTROUTING --out-interface $FROM_IF -j MASQUERADE
 iptables --append FORWARD --in-interface $TO_IF -j ACCEPT
  
-#Thanks to lorenzo
-#Uncomment the line below if facing problems while sharing PPPoE, see lorenzo's comment for more details
+#Uncomment the line below if facing problems while sharing PPPoE
 #iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
  
 sysctl -w net.ipv4.ip_forward=1
@@ -60,4 +59,5 @@ echo "STARTING HOSTAPD"
 hostapd /etc/hostapd/hostapd.conf
 killall dnsmasq
 echo "killall dnsmasq executed"
+echo "Closing WiFi";
 rfkill block wlan;

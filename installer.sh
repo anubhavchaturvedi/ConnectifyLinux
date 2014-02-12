@@ -30,9 +30,9 @@ command -v dnsmasq >/dev/null 2>&1 || { echo >&2 "Error : Hostapd is not install
 
 if [ $flag != 0 ];
 then
-	echo "Would you like to install the required packages? Internet connection is required. [Y/n]  ";
+	echo -n "Would you like to install the required packages? Internet connection is required. [Y/n]  ";
 	read confirmation;
-	if [ $confirmation == 'y' || $confirmation == 'Y' ];
+	if [ $confirmation == 'y' ] || [ $confirmation == 'Y' ];
 	then
 		if [ $flag == 1 ];
 		then
@@ -49,16 +49,17 @@ then
 	fi
 fi
 
-
-echo "start process";
+command -v hostapd >/dev/null 2>&1 || { echo >&2 "Error : Could not install the required packages."; exit 1; };
+command -v dnsmasq >/dev/null 2>&1 || { echo >&2 "ERROR : Could not install the required packages."; exit 1; };
 
 echo "Configuring dnsmasq : /etc/dnsmasq.conf";
 cp ./dnsmasq.conf /etc/dnsmasq.conf
-cp ./hostapd-basic.conf /etc/hostapd/hostapd.conf
+cp -r ./hostapd-basic.conf /etc/hostapd/hostapd.conf
 
 cp ./connectifyLinux.sh /usr/bin/connectifyLinux
 chmod 755 /usr/bin/connectifyLinux
 
-
-
-
+echo "########################################################################################################";
+echo 
+echo "The installation is complete. The WiFi AP name is LinuxConnectify and the password is LinuxConnectify."
+echo "Please make any changes in name or password in /etc/hostapd/hostapd.conf"
