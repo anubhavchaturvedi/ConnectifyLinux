@@ -54,10 +54,21 @@ command -v dnsmasq >/dev/null 2>&1 || { echo >&2 "ERROR : Could not install the 
 
 echo "Configuring dnsmasq : /etc/dnsmasq.conf";
 cp ./dnsmasq.conf /etc/dnsmasq.conf
-cp -r ./hostapd-basic.conf /etc/hostapd/hostapd.conf
 
-cp ./connectifyLinux.sh /usr/bin/connectifyLinux
-chmod 755 /usr/bin/connectifyLinux
+mkdir /etc/hostapd
+cp ./hostapd-basic.conf /etc/hostapd/hostapd.conf
+
+mkdir /usr/share/ConnectifyLinux
+cp ./ConnectifyLinux /usr/share/ConnectifyLinux/
+cp ./startConnectifyLinux /usr/share/ConnectifyLinux/
+cp ./stopConnectifyLinux /usr/share/ConnectifyLinux/
+cp ./uninstaller /usr/share/ConnectifyLinux/
+
+chmod 755 /usr/share/ConnectifyLinux/ConnectifyLinux
+chmod 755 /usr/share/ConnectifyLinux/startConnectifyLinux
+chmod 755 /usr/share/ConnectifyLinux/stopConnectifyLinux
+
+ln -s -T /usr/share/ConnectifyLinux/ConnectifyLinux /usr/bin/ConnectifyLinux
 
 echo "########################################################################################################";
 echo 
