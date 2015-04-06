@@ -4,7 +4,7 @@ ConnectifyLinux
 Shell Script to simulate the behavior similar to Connectify for Windows/Mac
 
 USAGE:
-<code>sudo ConnectifyLinux start|stop|restart</code>
+<code>sudo ConnectifyLinux start|stop</code>
 
 INSTALLATION:
 Extract in a directory and after making it the current working directory run
