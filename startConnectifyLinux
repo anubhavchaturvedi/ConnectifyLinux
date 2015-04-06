@@ -26,6 +26,7 @@ fi
 
 
 echo "Starting the WiFi ..... ";
+nmcli nm wifi off
 rfkill unblock wlan;
 sleep 5;
 
